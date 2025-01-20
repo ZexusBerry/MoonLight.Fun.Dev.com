@@ -1,57 +1,49 @@
-// script.js
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('content').style.display = 'block';
-    checkLoginStatus();
-  }, 2000); // Simulate loading time
+document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () {
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+    }, 2000); // Задержка в 2 секунды для показа загрузки
+
+    document.getElementById('registerBtn').addEventListener('click', function () {
+        Swal.fire({
+            title: 'Register',
+            html: '<input type="text" id="username" class="swal2-input" placeholder="Username">' +
+                  '<input type="password" id="password" class="swal2-input" placeholder="Password">',
+            confirmButtonText: 'Register',
+            focusConfirm: false,
+            preConfirm: () => {
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                if (!username || !password) {
+                    Swal.showValidationMessage('Please fill in both fields');
+                    return;
+                }
+                localStorage.setItem('username', username);
+                localStorage.setItem('password', password);
+                Swal.fire('Success!', 'You are now registered!', 'success');
+            }
+        });
+    });
+
+    document.getElementById('loginBtn').addEventListener('click', function () {
+        const username = localStorage.getItem('username');
+        const password = localStorage.getItem('password');
+        if (username && password) {
+            Swal.fire('Welcome Back!', `Hello, ${username}`, 'success');
+        } else {
+            Swal.fire('Please Register First');
+        }
+    });
+
+    const buttons = document.querySelectorAll('.get-btn');
+    buttons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            const username = localStorage.getItem('username');
+            if (username) {
+                Swal.fire('Downloading...', 'Your program is being downloaded', 'info');
+            } else {
+                Swal.fire('Please log in first');
+            }
+        });
+    });
 });
-
-function showRegister() {
-  document.getElementById('registerForm').classList.remove('hidden');
-  document.getElementById('mainContent').classList.add('hidden');
-}
-
-function checkLoginStatus() {
-  const userData = getCookie('user');
-  if (userData) {
-    // If user is logged in
-    document.getElementById('registerTab').style.display = 'none';
-    // Show the main content
-  } else {
-    // If user is not logged in, show the register button
-    document.getElementById('registerTab').style.display = 'inline-block';
-  }
-}
-
-function handleButtonClick(item) {
-  const userData = getCookie('user');
-  if (!userData) {
-    alert('Please register or log in first!');
-    showRegister();
-    return;
-  }
-  // Handle get button functionality based on the item
-  alert(`Getting ${item}...`);
-}
-
-function register() {
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
-
-  // Save user data as cookies
-  document.cookie = `user=${username}; path=/`;
-  
-  // Save in a simulated database (for example purposes)
-  alert('Registration successful!');
-  
-  // Redirect to the main content
-  document.getElementById('registerForm').classList.add('hidden');
-  document.getElementById('mainContent').classList.remove('hidden');
-}
-
-// Helper function to get cookies
-function getCookie(name) {
-  let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-  return match ? match[2] : null;
-}
