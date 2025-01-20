@@ -1,0 +1,70 @@
+/* styles.css */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #282c34;
+  color: white;
+  text-align: center;
+}
+
+.tab {
+  background-color: #444;
+  padding: 10px;
+  text-align: center;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.hidden {
+  display: none;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #282c34;
+  color: white;
+}
+
+.card {
+  margin: 20px;
+  display: inline-block;
+  background-color: #333;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.card img {
+  width: 100px;
+  height: 100px;
+}
+
+#registerForm {
+  margin-top: 20px;
+}
+
+input {
+  margin: 10px;
+  padding: 10px;
+  font-size: 14px;
+  width: 200px;
+}
+
+h1, h2 {
+  color: white;
+}
